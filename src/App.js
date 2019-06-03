@@ -25,7 +25,7 @@ function App() {
 
           <Route exact path="/" component={Dashboard} />
           <Route path="/project/:id" component={ProjectDetails} />
-          <Route path="/project/create" component={CreateProject} />
+          <Route path="/create" component={CreateProject} />
           <Route path="/task/create" component={CreateTask} />
           <Route path="/signin" component={SignIn} />
           <Route path="/signup" component={SignUp} />

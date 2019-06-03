@@ -7,7 +7,6 @@ const ProjectSummary = ({project}) => {
   			<span className="card-title">{project.title}</span>
   			<p>Posted by Micmic</p>
   			<p className="grey-text">31st of May, 12pm</p>
-  			<a href={"/project/" + project.id}>View More</a>
   		</div>
   	</div>
 	)

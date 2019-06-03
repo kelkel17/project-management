@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
+import { signIn } from '../../store/actions/authActions'
 
 
 class SignIn extends Component {
@@ -25,7 +25,7 @@ class SignIn extends Component {
 		const { authError, auth } = this.props;
 
 		// Redirect Login users to dashboard
-		// if (auth.uid) return <Redirect to="/" />
+		if (auth.uid) return <Redirect to="/" />
 
 		return (
 			<div className="container">

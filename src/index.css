@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+.row.task-list {
+  padding: 2rem 0;
+}
+
 input[type=text]:not(.browser-default):focus:not([readonly]),
 input[type=email]:not(.browser-default):focus:not([readonly]),
 input[type=passowrd]:not(.browser-default):focus:not([readonly]),

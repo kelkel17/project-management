@@ -14,7 +14,7 @@ export const createProject = (project) => {
 			dispatch({ type: 'CREATE_PROJECT', project })
 			swal({
 			  title: "Good job!",
-			  text: "You clicked the button!",
+			  text: "You successfully created a new project!",
 			  icon: "success",
 			});
 		}).catch((response) => {

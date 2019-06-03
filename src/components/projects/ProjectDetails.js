@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Components
+import ProjectTask from '../tasks/ProjectTask'
+import RecentUpdates from '../tasks/RecentUpdates'
+
 const ProjectDetails = (props) => {
   return (
   	<div className="container section project-details">
@@ -13,6 +17,16 @@ const ProjectDetails = (props) => {
 	  			<div>31st of May, 12pm</div>
 	  		</div>
 	  	</div>
+
+			<div className="row task-list">
+				<h5 className="grey-text center">Tasks List</h5>
+				<div className="col s12 m6">
+					<ProjectTask />
+				</div>
+				<div className="col s12 m5 offset-m1">
+					<RecentUpdates />
+				</div>
+			</div>
 	  </div>
   )
 }

@@ -8,19 +8,34 @@ import moment from 'moment'
 // Components
 import ProjectTask from '../tasks/ProjectTask'
 import RecentUpdates from '../tasks/RecentUpdates'
+import { closeProject } from '../../store/actions/projectActions'
+import { openProject } from '../../store/actions/projectActions'
 
 const ProjectDetails = (props) => {
 	const { project, auth } = props;
-
+	let button = '';
 	// Redirect to Login page user if not login
 	if (!auth.uid) return <Redirect to="/signin" />
 
 	if (project) {
+		console.log(project);
+		if (auth.uid === project.authorId) {
+			if (project.status === "Close")
+				button = <button onClick={() => { props.openProject(props.match.params.id) }} className="waves-effect waves-light btn right green"><i className="material-icons left">open_in_new</i>Open Project</button>
+			else
+				button = <button onClick={() => { props.closeProject(props.match.params.id) }} className="waves-effect waves-light btn right red"><i className="material-icons left">report</i>Close Project</button>
+		}
+
 		return (
   		<div className="container section project-details">
 		    <div className="card z-depth-0">
 		  		<div className="card-content">
-		  			<span className="card-title">{ project.title }</span>
+		  			<span className="card-title">{ project.title }
+		  				<span>
+		  					{button}
+
+		  				</span>
+		  			</span>
 		  			<p>{ project.content }</p>
 		  		</div>
 	  			<div className="card-action grey lighten-4 grey-text">
@@ -47,7 +62,6 @@ const ProjectDetails = (props) => {
 			</div>
 		)
 	}
-
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -55,14 +69,22 @@ const mapStateToProps = (state, ownProps) => {
 	const projects = state.firestore.data.projects;
 	const project = projects ? projects[id] : null;
 
+
 	return {
 		project: project,
 		auth: state.firebase.auth
 	}
 }
 
+const mapDispatchToProps = (dispatch) => {
+	return {
+		closeProject: (project) => dispatch(closeProject(project)),
+		openProject: (project) => dispatch(openProject(project)),
+	}
+}
+
 export default compose(
-	connect(mapStateToProps),
+	connect(mapStateToProps, mapDispatchToProps),
 	firestoreConnect([
 		{ collection: 'projects' }
 	])

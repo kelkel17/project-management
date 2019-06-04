@@ -4,13 +4,14 @@ import swal from 'sweetalert';
 export const signIn = (credentials) => {
 	return (dispatch, getState, { getFirebase }) => {
 		const firebase = getFirebase();
+		let toast = '<span><i class="material-icons left">check_circle</i>Succesfully Login!</span>';
 
 		firebase.auth().signInWithEmailAndPassword(
 			credentials.email,
 			credentials.password
 		).then(() => {
 			dispatch({ type: 'LOGIN_SUCCESS' });
-			 M.toast({html: 'Succesfully Login!', displayLength: 1000000, classes: 'rounded'});
+			 M.toast({html: toast, displayLength: 5000, classes: "rounded green"});
 		}).catch((error) => {
 			dispatch({ type: 'LOGIN_ERROR', error });
 		});

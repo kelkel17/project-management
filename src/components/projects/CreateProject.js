@@ -22,6 +22,7 @@ class CreateProject extends Component {
 		// prevent page from being reload
 		e.preventDefault();
 		this.props.createProject(this.state);
+		this.props.history.push('/')
 	}
 
 	render() {

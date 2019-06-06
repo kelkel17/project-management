@@ -2,7 +2,7 @@ import React from 'react';
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { firestoreConnect } from 'react-redux-firebase'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import moment from 'moment'
 
 // Components
@@ -13,17 +13,19 @@ import { openProject } from '../../store/actions/projectActions'
 
 const ProjectDetails = (props) => {
 	const { project, auth } = props;
-	let button = '';
+	let button;
+	let link;
 	// Redirect to Login page user if not login
 	if (!auth.uid) return <Redirect to="/signin" />
 
 	if (project) {
-		console.log(project);
 		if (auth.uid === project.authorId) {
+			link = <Link to={"/project/" + props.match.params.id + "/edit"}><button className="waves-effect btn right orange"><i className="material-icons left">mode_edit</i>Edit Project</button></Link>
+
 			if (project.status === "Close")
-				button = <button onClick={() => { props.openProject(props.match.params.id) }} className="waves-effect waves-light btn right green"><i className="material-icons left">open_in_new</i>Open Project</button>
+				button = <button onClick={() => { props.openProject(props.match.params.id) }} className="waves-effect btn right green"><i className="material-icons left">open_in_new</i>Open Project</button>
 			else
-				button = <button onClick={() => { props.closeProject(props.match.params.id) }} className="waves-effect waves-light btn right red"><i className="material-icons left">report</i>Close Project</button>
+				button = <button onClick={() => { props.closeProject(props.match.params.id) }} className="waves-effect btn right red"><i className="material-icons left">report</i>Close Project</button>
 		}
 
 		return (
@@ -31,12 +33,12 @@ const ProjectDetails = (props) => {
 		    <div className="card z-depth-0">
 		  		<div className="card-content">
 		  			<span className="card-title">{ project.title }
-		  				<span>
+		  				<span className="right">
 		  					{button}
-
+		  					{link}
 		  				</span>
 		  			</span>
-		  			<p>{ project.content }</p>
+		  			<p>{ project.details }</p>
 		  		</div>
 	  			<div className="card-action grey lighten-4 grey-text">
 		  			<div>Posted by { project.authorFirstName } { project.authorLastName }</div>
@@ -68,7 +70,6 @@ const mapStateToProps = (state, ownProps) => {
 	const id = ownProps.match.params.id;
 	const projects = state.firestore.data.projects;
 	const project = projects ? projects[id] : null;
-
 
 	return {
 		project: project,

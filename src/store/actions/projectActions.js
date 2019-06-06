@@ -50,7 +50,6 @@ export const closeProject = (project) => {
   		dangerMode: true,
 		}).then((willClose) => {
 			if (willClose) {
-				console.log('yes');
 				firestore.collection('projects').doc(project).update({
 					status: 'Close',
 					updatedAt: currentDate
@@ -58,8 +57,6 @@ export const closeProject = (project) => {
 					swal({
 					  title: "You successfully open this project!",
 					  icon: "success",
-					}).then(() => {
-						window.location.reload();
 					})
 				});
 			}
@@ -79,7 +76,6 @@ export const openProject = (project) => {
   		dangerMode: true,
 		}).then((willClose) => {
 			if (willClose) {
-				console.log('yes');
 				firestore.collection('projects').doc(project).update({
 					status: 'Open',
 					updatedAt: currentDate
@@ -87,11 +83,44 @@ export const openProject = (project) => {
 					swal({
 					  title: "You successfully close this project!",
 					  icon: "success",
-					}).then(() => {
-						window.location.reload();
 					})
 				});
 			}
+		})
+	}
+}
+
+export const fetchProject = () => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore();
+
+		console.log('asd');
+
+		firestore.collection('projects').get().then(() => {
+			dispatch({ type: "FETCH_SUCCESS" })
+		})
+	}
+}
+
+export const editProject = (title, details, projectId) => {
+	return (dispatch, getState, { getFirebase, getFirestore }) => {
+		const firestore = getFirestore();
+
+		firestore.collection('projects').doc(projectId).update({
+			title: title,
+			details: details,
+			updatedAt: currentDate
+		}).then(() => {
+			dispatch({ type: 'UPDATED_PROJECT' })
+			swal({
+			  title: "Good job!",
+			  text: "You successfully updated the project!",
+			  icon: "success",
+			}).then(() => {
+				window.location.href = "/project/" + projectId;
+			});
+		}).catch((response) => {
+			dispatch({ type: 'UPDATED_PROJECT_ERROR', response })
 		})
 	}
 }

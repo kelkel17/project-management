@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar'
 import Dashboard from './components/dashboard/Dashboard'
 import ProjectDetails from './components/projects/ProjectDetails'
 import CreateProject from './components/projects/CreateProject'
+import EditProject from './components/projects/EditProject'
 import CreateTask from './components/tasks/CreateTask'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
@@ -24,7 +25,8 @@ function App() {
           */}
 
           <Route exact path="/" component={Dashboard} />
-          <Route path="/project/:id" component={ProjectDetails} />
+          <Route exact path="/project/:id" component={ProjectDetails} />
+          <Route path="/project/:id/edit" component={EditProject} />
           <Route path="/create" component={CreateProject} />
           <Route path="/task/create" component={CreateTask} />
           <Route path="/signin" component={SignIn} />
